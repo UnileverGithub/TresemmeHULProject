@@ -9,6 +9,7 @@ import pageObjects.IndulekhaHomeElement;
 public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 
 	IndulekhaHomeElement IndulekhaHomeElementOBJ = new IndulekhaHomeElement();
+	IndulekhaLoginPageEvents IndulekhaLoginPageEventsOBJ;
 	
 	/*
 	 * Author: Renu
@@ -455,18 +456,12 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		return this;
 	}
 	
-	public IndulekhaHomepageEvents verifyLoginPageLinks()
+	public IndulekhaLoginPageEvents clickOnLogin()
 	{
 		verifyLeftPositionOfElement(driver.findElement(linkTrackMyOrder), driver.findElement(btn_login));
 		driver.findElement(btn_login).isDisplayed();
 		driver.findElement(btn_login).click();
-		waitTillElementAppear(driver.findElement(btn_Facebook));
-		driver.findElement(btn_Facebook).isDisplayed();
-		driver.findElement(btn_Google).isDisplayed();
-		driver.findElement(txtbox_email).isDisplayed();
-		driver.findElement(txtbox_password).isDisplayed();
-		driver.findElement(btnLogin).isDisplayed();
-		return this;
+		return new IndulekhaLoginPageEvents();
 	}
-
+	
 }

@@ -28,11 +28,6 @@ public class IndulekhaHomeElement extends BaseTest{
 	protected By btn_offerUpdateDontAllow = By.xpath("//div[@id='moe-push-div' and not(contains(@style,'display: none'))]//button[@id='moe-dontallow_button']");
 	protected By linkTrackMyOrder = By.xpath("//a[contains(@class,'track_my_order')]");
 	protected By btn_login = By.id("account_icon");
-	protected By btn_Facebook = By.xpath("//div[@id='divButtonFb']/button");
-	protected By btn_Google = By.xpath("//div[@id='divButtonGoogle']/button");
-	protected By txtbox_email = By.xpath("//input[@type='email' and @name='customer[email]']");
-	protected By txtbox_password = By.xpath("//input[@type='password' and @name='customer[password]']");
-	protected By btnLogin = By.xpath("//button[@type='submit' and contains(text(),'Login')]");
 	
 	//****************Global Navbar ******************//
 	

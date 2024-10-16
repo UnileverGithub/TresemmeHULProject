@@ -70,7 +70,8 @@ public class BaseTest {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 	}
 	 //uncomment this when code need to run thru testng.xml
-	*/  
+	
+	*/
 	
 
 	@BeforeMethod
@@ -85,7 +86,7 @@ public class BaseTest {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 	}
 
-	
+
     public void captureScreenshot() {
 		String ss = ((TakesScreenshot)BaseTest.driver).getScreenshotAs(OutputType.BASE64);
 		logger.pass("Passed Screenshot: Please click 'Base64 img' link present below", MediaEntityBuilder.createScreenCaptureFromBase64String(ss)
@@ -424,6 +425,18 @@ public class BaseTest {
 				logger.fail("Element not prensent");
 			
 			logger.info("****** Ending of verifyRightPositionOfElement() ******");
+		}
+		
+		public void verifyHeading(String heading)
+		{
+			WebElement activeBreadcrum = driver.findElement(By.xpath("//h1[text()='"+heading+"']|//h2[text()='"+heading+"']|//h3[text()='"+heading+"']|//div[text()='"+heading+"']"));
+			activeBreadcrum.isDisplayed();
+		}
+		
+		public void verifyPreHeading(String preHeading)
+		{
+			WebElement activeBreadcrum = driver.findElement(By.xpath("//p[text()='"+preHeading+"']"));
+			activeBreadcrum.isDisplayed();
 		}
 		
 		
