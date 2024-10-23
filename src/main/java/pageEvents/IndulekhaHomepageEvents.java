@@ -438,6 +438,11 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: verify NavBar links
+	 * parameters: category and url
+	 */
 	public IndulekhaHomepageEvents verifyNavBarLinks(String category, String Url)
 	{
 		WebElement navbarCategory = driver.findElement(By.xpath("//height-observer[@id='menuHeader']//nav/ul/li[@id='"+category+"']"));
@@ -456,12 +461,139 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: click on login button
+	 */
 	public IndulekhaLoginPageEvents clickOnLogin()
 	{
 		verifyLeftPositionOfElement(driver.findElement(linkTrackMyOrder), driver.findElement(btn_login));
 		driver.findElement(btn_login).isDisplayed();
 		driver.findElement(btn_login).click();
 		return new IndulekhaLoginPageEvents();
+	}
+	
+	public IndulekhaHomepageEvents verifyTrackOrderIcon()
+	{
+		driver.findElement(linkTrackMyOrder).isDisplayed();
+		verifyLeftPositionOfElement(driver.findElement(linkTrackMyOrder), driver.findElement(btn_login));
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents clickOnTrackOrderIcon()
+	{
+		waitTillElementIsClickable(driver.findElement(linkTrackMyOrder));
+		driver.findElement(linkTrackMyOrder).click();
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents verifyTrackOrderPage()
+	{
+		verifyHeading("Track Your Order");
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.indulekha.co.in/pages/track-order-page");
+		driver.findElement(txt_OrderIDOrAWBNo).isDisplayed();
+		driver.findElement(txtbx_TrackingID).isDisplayed();
+		driver.findElement(btn_SubmitTrackingID).isDisplayed();
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents enterOrderIDOrAWB(String OrderID)
+	{
+		waitTillElementIsClickable(driver.findElement(txtbx_TrackingID));
+		driver.findElement(txtbx_TrackingID).sendKeys(OrderID);
+		driver.findElement(btn_SubmitTrackingID).click();
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents verifyTrackingDetails(String OrderID)
+	{
+		waitTillElementAppear(driver.findElement(trackDetailSection));
+		driver.findElement(trackDetailSection).isDisplayed();
+		driver.findElement(trackBody).isDisplayed();
+		driver.findElement(txt_shippedVia).isDisplayed();
+		driver.findElement(txt_deliveryStatus).isDisplayed();
+		driver.findElement(txt_Deliverydate).isDisplayed();
+		Assert.assertEquals(driver.findElement(txt_trackHead).getText(), "Tracking Order No (Order Id or AWB No) - "+OrderID);
+		return this;
+	}
+	
+	
+	public IndulekhaHomepageEvents verifyTrackingDetailsForInvalidOrderID(String OrderID)
+	{
+		driver.findElement(txt_NoTrackIDDes).isDisplayed();
+		waitTillElementAppear(driver.findElement(txt_NoTrackIDDes));
+		Assert.assertEquals(driver.findElement(txt_NoTrackIDDes).getText(), "Please Enter the correct Order Id or Awb Number");
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents verifySafetyAdvisory()
+	{
+		waitTillElementAppear(driver.findElement(txt_SafetyAdvisory));
+		driver.findElement(txt_SafetyAdvisory).isDisplayed();
+		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Safety Advisory");
+		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Cyber crime, particularly fraudulent communications through phone, SMS, WhatsApp, emails, etc. with third parties impersonating as a genuine organization or brand to financially dupe consumers is on the rise.");
+		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Unilever does not request for payment for purchase of our products outside our platform for any promotional activity. We also do not request for payments to participate in any contest, luck draw, free gifts. Hence, we request all consumers to be cautious in the event of any such communications. You can reach out to our customer care listed on our platform to verify any suspicious activity.");
+		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Note: You can also report any suspected fraudulent telecommunications on Chakshu Portal, to the Department of Telecommunications (DOT).");
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents verifySocialMediaIcons() throws InterruptedException
+	{
+		logger.info("*******Starting of the verifySocialMediaIcons() method******");
+		driver.findElement(img_FloatingWhatsapp).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(img_FloatingWhatsapp));
+		hover(driver.findElement(img_FloatingWhatsapp));
+		driver.findElement(img_FloatingWhatsapp).click();
+		switchToNextTab();
+		System.out.println("current url" +driver.getCurrentUrl());
+		verifySubStringPresence(driver.getCurrentUrl(), "https://api.whatsapp.com/send/");
+		//Assert.assertEquals("Navigating to wrong page",driver.getCurrentUrl(), "https://api.whatsapp.com/send/?phone=919029003150&text=Hey%2C+Let%E2%80%99s+chat+about+Indulekha+.&type=phone_number&app_absent=0");
+		closeTabAndReturn();
+		logger.pass("Navigated to whatsapp Page");
+		driver.findElement(lnk_facebookIcon).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(lnk_facebookIcon));
+		hover(driver.findElement(lnk_facebookIcon));
+		driver.findElement(lnk_facebookIcon).click();
+		switchToNextTab();
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.facebook.com/IndulekhaCare/");
+		closeTabAndReturn();
+		logger.pass("Navigated to facebook Page");
+		driver.findElement(lnk_TwitterIcon).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(lnk_TwitterIcon));
+		hover(driver.findElement(lnk_TwitterIcon));
+		waitTillElementAppear(driver.findElement(btn_SignUpPopUpNoThanks));
+		driver.findElement(btn_SignUpPopUpNoThanks).click();
+		driver.findElement(lnk_TwitterIcon).click();
+		switchToNextTab();
+		Thread.sleep(5000);
+		Assert.assertEquals(driver.getCurrentUrl(), "https://x.com/i/flow/login?redirect_after_login=%2FIndulekhaCare");
+		closeTabAndReturn();
+		logger.pass("Navigated to twitter Page");
+		driver.findElement(lnk_InstaIcon).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(lnk_InstaIcon));
+		hover(driver.findElement(lnk_InstaIcon));
+		driver.findElement(lnk_InstaIcon).click();
+		switchToNextTab();
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Findulekha_care%2F%3Futm_medium&is_from_rle");
+		closeTabAndReturn();
+		logger.pass("Navigated to Instagram Page");
+		driver.findElement(lnk_YoutubeIcon).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(lnk_YoutubeIcon));
+		hover(driver.findElement(lnk_YoutubeIcon));
+		driver.findElement(lnk_YoutubeIcon).click();
+		switchToNextTab();
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.youtube.com/channel/UC6JF4BuDlDMpN6e_uJ54t9A");
+		closeTabAndReturn();
+		logger.pass("Navigated to Youtube Page");
+		driver.findElement(lnk_BebeIcon).isDisplayed();
+		waitTillElementIsClickable(driver.findElement(lnk_BebeIcon));
+		hover(driver.findElement(lnk_BebeIcon));
+		driver.findElement(lnk_BebeIcon).click();
+		switchToNextTab();
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.bebeautiful.in/");
+		closeTabAndReturn();
+		logger.pass("Navigated to Bebeautiful Page");
+		return this;
 	}
 	
 }

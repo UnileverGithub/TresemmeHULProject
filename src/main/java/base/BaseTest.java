@@ -2,6 +2,7 @@ package base;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.ArrayList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -438,6 +439,45 @@ public class BaseTest {
 			WebElement activeBreadcrum = driver.findElement(By.xpath("//p[text()='"+preHeading+"']"));
 			activeBreadcrum.isDisplayed();
 		}
+		
+		 public void switchToNextTab() {
+			    logger.info("****** Starting of switchToNextTab() ******");
+		        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		        driver.switchTo().window(tab.get(1));
+		        logger.info("****** Ending of switchToNextTab() ******");
+		    }
+		    
+		    public void closeAndSwitchToNextTab() {
+		    	logger.info("****** Starting of closeAndSwitchToNextTab() ******");
+		    	driver.close();
+		        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		        driver.switchTo().window(tab.get(1));
+		        logger.info("****** Ending of closeAndSwitchToNextTab() ******");
+		    }
+
+		    public void switchToPreviousTab() {
+		    	logger.info("****** Starting of switchToPreviousTab() ******");
+		        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		        driver.switchTo().window(tab.get(0));
+		        logger.info("****** Ending of switchToPreviousTab() ******");
+		    }
+
+		    public void closeTabAndReturn() {
+		    	logger.info("****** Starting of closeTabAndReturn() ******");
+		    	driver.close();
+		        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		        driver.switchTo().window(tab.get(0));
+		        logger.info("****** Ending of closeTabAndReturn() ******");
+		    }
+
+		    public void switchToPreviousTabAndClose() {
+		    	logger.info("****** Starting of switchToPreviousTabAndClose() ******");
+		        ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		        driver.switchTo().window(tab.get(1));
+		        driver.close();
+		        logger.info("****** Ending of switchToPreviousTabAndClose() ******");
+		    }
+		    
 		
 		
 	
