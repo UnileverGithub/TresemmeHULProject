@@ -11,7 +11,7 @@ public class IndulekhaHomeElement extends BaseTest{
 
 	protected By btn_okCookie = By.xpath("//button[@id='onetrust-accept-btn-handler']");
 	protected By btn_SignUpPopUpNoThanks = By.xpath("//div[contains(@class,'ecomsend__Modal') and text()='No, Thanks']");
-	protected By img_indulekhaLogo = By.xpath("//img[@alt='indulekha logo' and @class='header__logo-image']");
+	protected By img_indulekhaLogo = By.xpath("//img[@alt='indulekha logo' and @class='header__logo-image']/..");
 	protected By herobanner = By.xpath("//section[@id='shopify-section-template--16785541070893__slideshow']");
 	protected By globalHeader = By.xpath("//height-observer[@id='menuHeader']");
 	protected By bestPickSection = By.xpath("//div[@id='featured_collection']");
@@ -34,7 +34,12 @@ public class IndulekhaHomeElement extends BaseTest{
 	protected By lnk_InstaIcon = By.xpath("//div[@id='bottomFooter']//div[contains(@class,'footer__block--contact-us')]//a[@aria-label='Follow on Instagram']");
 	protected By lnk_YoutubeIcon = By.xpath("//div[@id='bottomFooter']//div[contains(@class,'footer__block--contact-us')]//a[@aria-label='Follow on YouTube']");
 	protected By lnk_BebeIcon = By.xpath("//div[@id='bottomFooter']//div[contains(@class,'footer__block--contact-us')]//a[@aria-label='Follow on be-beautiful']");
-	
+	protected By footerSection = By.xpath("//div[@id='bottomFooter']");
+	protected By footerSocialMedia = By.xpath("//div[@id='bottomFooter']//p[text()='Contact Us']/..//ul[contains(@class,'social-media')]");
+	protected By footerTelNumber = By.xpath("//div[@id='bottomFooter']//p[text()='Contact Us']/..//div[@id='tel_number']");
+	protected By footerMailID = By.xpath("//div[@id='bottomFooter']//p[text()='Contact Us']/..//div[@id='mailId']");
+	protected By footerTimingDetails = By.xpath("//div[@id='bottomFooter']//p[text()='Contact Us']/..//div[contains(@class,'timing_details')]");
+	protected By lnk_CartIcon = By.xpath("//a[@id='cart_icon']");
 	
 	
 	//****************tracking order sesction ******************//
@@ -49,7 +54,8 @@ public class IndulekhaHomeElement extends BaseTest{
 	protected By txt_Deliverydate = By.xpath("//div[@class='track-order-discription']/div/span[text()='Delivered date: ']");
 	protected By txt_trackHead = By.xpath("//div[@class='trackOrder']//div[@class='track-head']");
 	protected By txt_NoTrackIDDes = By.xpath("//div[@class='no-trackOrder']//div[@class='no-track-order-discription']");
-	
+	protected By annoucementBanner = By.xpath("//height-observer[@id='announcementBar']");
+	protected By txt_annoucementBar = By.xpath("//height-observer[@id='announcementBar']//announcement-bar-carousel");
 	
 	//*************Dynamic locators********************//
 	

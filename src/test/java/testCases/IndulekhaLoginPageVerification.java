@@ -12,7 +12,7 @@ public class IndulekhaLoginPageVerification extends BaseTest{
 	public final static String emailAddress = "UnileverTesting01@gmail.com";
 	public final static String password = "Testing@123";
 	
-	@Test @Ignore
+	@Test 
 	public void verifyLoginpage()
 	{
 		

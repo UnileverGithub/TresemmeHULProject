@@ -1,8 +1,13 @@
 package base;
 
-import java.lang.reflect.Method;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -24,7 +29,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
-
+import java.lang.reflect.Method;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -59,22 +64,20 @@ public class BaseTest {
 	}
 	
 
-/*
-	@BeforeMethod
-	@Parameters("browser")
-	public void beforeMethod(String browser, Method testMethod)
-	{
-		logger = extent.createTest(testMethod.getName());
-		setupDriver(browser);
-		driver.manage().window().maximize();
-		driver.get(Constants.url);
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-	}
+	/*
+	 * @BeforeMethod
+	 * 
+	 * @Parameters("browser") public void beforeMethod(String browser, Method
+	 * testMethod) { logger = extent.createTest(testMethod.getName());
+	 * setupDriver(browser); driver.manage().window().maximize();
+	 * driver.get(Constants.url);
+	 * driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20)); }
+	 */
 	 //uncomment this when code need to run thru testng.xml
 	
-	*/
 	
-
+	
+	
 	@BeforeMethod
 	public void beforeMethod(Method testMethod)
 	//public void beforeMethod()
@@ -86,7 +89,7 @@ public class BaseTest {
 		driver.get(Constants.url);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 	}
-
+	
 
     public void captureScreenshot() {
 		String ss = ((TakesScreenshot)BaseTest.driver).getScreenshotAs(OutputType.BASE64);
@@ -476,6 +479,33 @@ public class BaseTest {
 		        driver.switchTo().window(tab.get(1));
 		        driver.close();
 		        logger.info("****** Ending of switchToPreviousTabAndClose() ******");
+		    }
+		    
+		    public static boolean checkImageResolution(String imageUrl, int minWidth, int minHeight) {
+		        try {
+		            URL url = new URL(imageUrl);
+		            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		            connection.setRequestMethod("GET");
+		            connection.setConnectTimeout(5000); // Timeout if needed
+		            connection.connect();
+
+		            if (connection.getResponseCode() == 200) {
+		                // Read image from URL
+		                InputStream inputStream = connection.getInputStream();
+		                BufferedImage image = ImageIO.read(inputStream);
+
+		                int width = image.getWidth();
+		                int height = image.getHeight();
+
+		                // Check if resolution meets the requirement
+		                return width >= minWidth && height >= minHeight;
+		            }
+
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+
+		        return false; // Return false if there was an error
 		    }
 		    
 		

@@ -21,8 +21,9 @@ public class IndulekhaHomePageHeaderNavbar extends BaseTest{
 				+ "<b>then:</b> verify subcategory under hair concerns category<br>"
 				+ "<b>And:</b> 	verify understanding hair loss category<br>"
 				+ "<b>And:</b>  verify FAQs category<br>"
-				+ "<b>And:</b>  verify hair quiz category<br>"
-				+ "<b>And:</b>  verify Track order link<br>";
+				//+ "<b>And:</b>  verify hair quiz category<br>"
+				//+ "<b>And:</b>  verify Track order link<br>"
+				+ "<b>And:</b>  verify Announcement banner<br>";
 		logger.info(message);
 		
 		navigateToDesiredURL("https://www.indulekha.co.in/");
@@ -31,8 +32,9 @@ public class IndulekhaHomePageHeaderNavbar extends BaseTest{
 		.verifyHairConcernHeaderLinks("hair_concerns")
 		.verifyNavBarLinks("understanding_hair_loss", "https://www.indulekha.co.in/pages/understanding-hair-loss")
 		.verifyNavBarLinks("faqs", "https://www.indulekha.co.in/pages/faqs")
-		.verifyNavBarLinks("hair_quiz", "https://hairquiz.indulekha.co.in/")
-		.verifyNavBarLinks("track_order", "https://www.indulekha.co.in/pages/track-order-page");
+		//.verifyNavBarLinks("hair_quiz", "https://hairquiz.indulekha.co.in/")
+		//.verifyNavBarLinks("track_order", "https://www.indulekha.co.in/pages/track-order-page")
+		.verifyAnnoucementBanner();
 		
 	}
 }

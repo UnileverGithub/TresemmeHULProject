@@ -1,15 +1,21 @@
 package pageEvents;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import pageObjects.IndulekhaHomeElement;
+import utils.Consoleloggers;
 
 public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 
 	IndulekhaHomeElement IndulekhaHomeElementOBJ = new IndulekhaHomeElement();
 	IndulekhaLoginPageEvents IndulekhaLoginPageEventsOBJ;
+	Logger log = Consoleloggers.getLogger(IndulekhaHomepageEvents.class);
 	
 	/*
 	 * Author: Renu
@@ -19,6 +25,13 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 	{
 		if(driver.findElement(btn_okCookie).isDisplayed())
 			driver.findElement(btn_okCookie).click();
+		return this;
+	}
+	
+	public IndulekhaHomepageEvents privacyPolicy(String acceptOrDecline)
+	{
+		WebElement privacyPolicy = driver.findElement(By.xpath("//section[@id='shopify-pc__banner']//button[text()='"+acceptOrDecline+"']"));
+		privacyPolicy.click();
 		return this;
 	}
 
@@ -35,6 +48,7 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		driver.findElement(img_indulekhaLogo).isDisplayed();
 		logger.pass("Brand logo is present");
 		driver.findElement(herobanner).isDisplayed();
+		log.info(driver.findElement(herobanner)+"is present");
 		driver.findElement(globalHeader).isDisplayed();
 		logger.info("*********Ending of verifyIndulekhaHomePage()**********");
 		return this;
@@ -438,6 +452,12 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		return this;
 	}
 	
+	public IndulekhaHomepageEvents verifyAnnoucementBanner()
+	{
+		driver.findElement(annoucementBanner).isDisplayed();
+		return this;
+	}
+	
 	/*
 	 * Author: Renu
 	 * method: verify NavBar links
@@ -445,6 +465,7 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 	 */
 	public IndulekhaHomepageEvents verifyNavBarLinks(String category, String Url)
 	{
+		logger.info("*********Starting of verifyNavBarLinks()**********");
 		WebElement navbarCategory = driver.findElement(By.xpath("//height-observer[@id='menuHeader']//nav/ul/li[@id='"+category+"']"));
 		logger.pass(navbarCategory.getAccessibleName() +"is present on the page.");
 		if(category.contains("Hair Quiz"))
@@ -457,8 +478,10 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 			navbarCategory.click();
 			Assert.assertEquals(driver.getCurrentUrl(), Url);
 		}
-		driver.navigate().back();
+		driver.findElement(img_indulekhaLogo).click();
+		logger.info("*********Ending of verifyNavBarLinks()**********");
 		return this;
+		
 	}
 	
 	/*
@@ -467,46 +490,79 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 	 */
 	public IndulekhaLoginPageEvents clickOnLogin()
 	{
-		verifyLeftPositionOfElement(driver.findElement(linkTrackMyOrder), driver.findElement(btn_login));
+		logger.info("*********Starting of clickOnLogin()**********");
+		verifyLeftPositionOfElement(driver.findElement(lnk_CartIcon), driver.findElement(btn_login));
 		driver.findElement(btn_login).isDisplayed();
 		driver.findElement(btn_login).click();
+		logger.info("*********Ending of clickOnLogin()**********");
 		return new IndulekhaLoginPageEvents();
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: this method will verify trackorderIcon on the top of page
+	 */
 	public IndulekhaHomepageEvents verifyTrackOrderIcon()
 	{
+		logger.info("*********Starting of verifyTrackOrderIcon()**********");
 		driver.findElement(linkTrackMyOrder).isDisplayed();
 		verifyLeftPositionOfElement(driver.findElement(linkTrackMyOrder), driver.findElement(btn_login));
+		logger.info("*********Ending of verifyTrackOrderIcon()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: this method will click on tracak your order link from global navbar
+	 */
 	public IndulekhaHomepageEvents clickOnTrackOrderIcon()
 	{
+		logger.info("*********Starting of clickOnTrackOrderIcon()**********");
 		waitTillElementIsClickable(driver.findElement(linkTrackMyOrder));
 		driver.findElement(linkTrackMyOrder).click();
+		logger.info("*********Ending of clickOnTrackOrderIcon()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will verify track order page
+	 */
 	public IndulekhaHomepageEvents verifyTrackOrderPage()
 	{
+		logger.info("*********Starting of verifyTrackOrderPage()**********");
 		verifyHeading("Track Your Order");
 		Assert.assertEquals(driver.getCurrentUrl(), "https://www.indulekha.co.in/pages/track-order-page");
 		driver.findElement(txt_OrderIDOrAWBNo).isDisplayed();
 		driver.findElement(txtbx_TrackingID).isDisplayed();
 		driver.findElement(btn_SubmitTrackingID).isDisplayed();
+		logger.info("*********Ending of verifyTrackOrderPage()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will enter OrderId 
+	 * parameters: OrderID
+	 */
 	public IndulekhaHomepageEvents enterOrderIDOrAWB(String OrderID)
 	{
+		logger.info("*********Starting of enterOrderIDOrAWB()**********");
 		waitTillElementIsClickable(driver.findElement(txtbx_TrackingID));
 		driver.findElement(txtbx_TrackingID).sendKeys(OrderID);
 		driver.findElement(btn_SubmitTrackingID).click();
+		logger.info("*********Ending of enterOrderIDOrAWB()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will verify tracking details after entering orderID
+	 * parameters: OrderID
+	 */
 	public IndulekhaHomepageEvents verifyTrackingDetails(String OrderID)
 	{
+		logger.info("*********Starting of verifyTrackingDetails()**********");
 		waitTillElementAppear(driver.findElement(trackDetailSection));
 		driver.findElement(trackDetailSection).isDisplayed();
 		driver.findElement(trackBody).isDisplayed();
@@ -514,29 +570,46 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		driver.findElement(txt_deliveryStatus).isDisplayed();
 		driver.findElement(txt_Deliverydate).isDisplayed();
 		Assert.assertEquals(driver.findElement(txt_trackHead).getText(), "Tracking Order No (Order Id or AWB No) - "+OrderID);
+		logger.info("*********Ending of verifyTrackingDetails()**********");
 		return this;
 	}
 	
-	
+	/*
+	 * Author: Renu
+	 * method: This method will verify tracking details for invalid order ID
+	 * parameters: OrderID
+	 */
 	public IndulekhaHomepageEvents verifyTrackingDetailsForInvalidOrderID(String OrderID)
 	{
+		logger.info("*********Starting of verifyTrackingDetailsForInvalidOrderID()**********");
 		driver.findElement(txt_NoTrackIDDes).isDisplayed();
 		waitTillElementAppear(driver.findElement(txt_NoTrackIDDes));
 		Assert.assertEquals(driver.findElement(txt_NoTrackIDDes).getText(), "Please Enter the correct Order Id or Awb Number");
+		logger.info("*********Ending of verifyTrackingDetailsForInvalidOrderID()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will verify safety advisory
+	 */
 	public IndulekhaHomepageEvents verifySafetyAdvisory()
 	{
+		logger.info("*********Starting of verifySafetyAdvisory()**********");
 		waitTillElementAppear(driver.findElement(txt_SafetyAdvisory));
 		driver.findElement(txt_SafetyAdvisory).isDisplayed();
 		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Safety Advisory");
 		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Cyber crime, particularly fraudulent communications through phone, SMS, WhatsApp, emails, etc. with third parties impersonating as a genuine organization or brand to financially dupe consumers is on the rise.");
 		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Unilever does not request for payment for purchase of our products outside our platform for any promotional activity. We also do not request for payments to participate in any contest, luck draw, free gifts. Hence, we request all consumers to be cautious in the event of any such communications. You can reach out to our customer care listed on our platform to verify any suspicious activity.");
 		verifySubStringPresence(driver.findElement(txt_SafetyAdvisory).getText(), "Note: You can also report any suspected fraudulent telecommunications on Chakshu Portal, to the Department of Telecommunications (DOT).");
+		logger.info("*********Ending of verifySafetyAdvisory()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will verify all social media icons 
+	 */
 	public IndulekhaHomepageEvents verifySocialMediaIcons() throws InterruptedException
 	{
 		logger.info("*******Starting of the verifySocialMediaIcons() method******");
@@ -593,7 +666,100 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 		Assert.assertEquals(driver.getCurrentUrl(), "https://www.bebeautiful.in/");
 		closeTabAndReturn();
 		logger.pass("Navigated to Bebeautiful Page");
+		logger.info("*********Ending of verifySocialMediaIcons()**********");
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: This method will verify product links present in footer section
+	 */
+	public IndulekhaHomepageEvents verifyFooterProductLink()
+	{
+		logger.info("*********Starting of verifyFooterProductLink()**********");
+		HashMap<String,String> footerProductLinks = new HashMap<String,String>();
+		footerProductLinks.put("Indulekha Bringha Hair Oil", "https://www.indulekha.co.in/products/bringha-ayurvedic-hair-growth-oil-100ml");
+		footerProductLinks.put("Indulekha Bringha Hair Shampoo", "https://www.indulekha.co.in/products/bringha-ayurvedic-hairfall-shampoo-200ml");
+		footerProductLinks.put("Indulekha Bringha Hair  Lepam", "https://www.indulekha.co.in/products/indulekha-bringha-hair-strengthening-lepam-200ml");
+		footerProductLinks.put("Indulekha Svetakutaja (Dandruff Treatment) Hair Shampoo", "https://www.indulekha.co.in/products/ayurvedic-dandruff-treatment-shampoo-580ml");
+		footerProductLinks.put("Indulekha Svetakutaja (Dandruff Treatment) Hair Oil", "https://www.indulekha.co.in/products/svetakutaja-ayurvedic-anti-dandruff-oil-100ml");
+		scrollIntoView(driver.findElement(footerSection));
+		if(driver.findElement(btn_SignUpPopUpNoThanks).isDisplayed())
+		{
+			waitTillElementAppear(driver.findElement(btn_SignUpPopUpNoThanks));
+			driver.findElement(btn_SignUpPopUpNoThanks).click();
+		}
+		for(Entry<String, String> entry: footerProductLinks.entrySet()) {
+			scrollIntoView(driver.findElement(footerSection));
+			WebElement productLinks =	driver.findElement(By.xpath("//div[@id='bottomFooter']//p[text()='Product Links']/../ul/li/a[text()='"+entry.getKey()+"']"));
+			waitTillElementIsClickable(productLinks);
+			productLinks.click();
+			Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+			driver.navigate().back();	 
+		}	
+		logger.info("*********Ending of verifyFooterProductLink()**********");
+		return this;
+	}
+	
+	/*
+	 * Author: Renu
+	 * method: This method will verify help links present in footer section
+	 */
+	public IndulekhaHomepageEvents verifyFooterHelpLink()
+	{
+		logger.info("*********Starting of verifyFooterHelpLink()**********");
+		HashMap<String,String> footerHelpLinks = new HashMap<String,String>();
+		footerHelpLinks.put("Testimonials", "https://www.indulekha.co.in/pages/testimonial");
+		footerHelpLinks.put("Enquiry & Info", "https://www.indulekha.co.in/pages/contact-us");
+		footerHelpLinks.put("Sitemap", "https://www.indulekha.co.in/pages/site-map-new");
+		footerHelpLinks.put("Return Policy", "https://www.indulekha.co.in/pages/return-policy");
+		footerHelpLinks.put("Refund Policy", "https://www.indulekha.co.in/policies/refund-policy");
+		footerHelpLinks.put("Shipping Policy", "https://www.indulekha.co.in/pages/shipping-policy");
+		footerHelpLinks.put("Cookie Notice", "https://www.unilevernotices.com/cookie-notices/india-english.html");
+		scrollIntoView(driver.findElement(footerSection));
+		if(driver.findElement(btn_SignUpPopUpNoThanks).isDisplayed())
+		{
+			waitTillElementAppear(driver.findElement(btn_SignUpPopUpNoThanks));
+			driver.findElement(btn_SignUpPopUpNoThanks).click();
+		}
+		for(Entry<String, String> entry: footerHelpLinks.entrySet()) {
+			scrollIntoView(driver.findElement(footerSection));
+			WebElement productLinks =	driver.findElement(By.xpath("//div[@id='bottomFooter']//p[text()='Help']/../ul/li/a[text()='"+entry.getKey()+"']"));
+			waitTillElementIsClickable(productLinks);
+			productLinks.click();
+			Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+			driver.navigate().back();	 
+		}	
+		WebElement productLinks =	driver.findElement(By.xpath("//div[@id='bottomFooter']//p[text()='Help']/../ul/li/a[contains(.,'FAQ')]"));
+		waitTillElementIsClickable(productLinks);
+		productLinks.click();
+		Assert.assertEquals("https://www.indulekha.co.in/pages/faqs", driver.getCurrentUrl());
+		logger.info("*********Ending of verifyFooterHelpLink()**********");
+		return this;
+	}
+	
+	/*
+	 * Author: Renu
+	 * method: This method will verify contact us section present in footer section
+	 */
+	public IndulekhaHomepageEvents verifyFooterContactUs()
+	{
+		logger.info("*********Starting of verifyFooterContactUss()**********");
+		waitTillElementAppear(driver.findElement(footerSocialMedia));
+		driver.findElement(footerSocialMedia).isDisplayed();
+		String phoneNo = driver.findElement(footerTelNumber).getText();
+		String mailID = driver.findElement(footerMailID).getText();
+		String timingDetails = driver.findElement(footerTimingDetails).getText();
+		Assert.assertEquals(phoneNo, "1800-102-2221");
+		logger.info(driver.findElement(footerTelNumber).getText()+"is present");
+		highlightElement(driver.findElement(footerTelNumber));
+		logger.info(driver.findElement(footerMailID).getText()+"is present");
+		highlightElement(driver.findElement(footerMailID));
+		logger.info(driver.findElement(footerTimingDetails).getText()+"is present");
+		highlightElement(driver.findElement(footerTimingDetails));
+		Assert.assertEquals(mailID, "lever.care@unilever.com");
+		Assert.assertEquals(timingDetails, "Monday – Sunday\n"+"( except public holiday )\n"+"Time - 09.00 am - 06.00 pm");
+		logger.info("*********Ending of verifyFooterContactUs()**********");
+		return this;
+	}
 }
