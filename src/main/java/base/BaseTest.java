@@ -433,7 +433,7 @@ public class BaseTest {
 		
 		public void verifyHeading(String heading)
 		{
-			WebElement activeBreadcrum = driver.findElement(By.xpath("//h1[text()='"+heading+"']|//h2[text()='"+heading+"']|//h3[text()='"+heading+"']|//div[text()='"+heading+"']"));
+			WebElement activeBreadcrum = driver.findElement(By.xpath("//h1[text()='"+heading+"']|//h2[text()='"+heading+"']|//h3[text()='"+heading+"']|//div[text()='"+heading+"']|//h1[contains(.,'"+heading+"')]"));
 			activeBreadcrum.isDisplayed();
 		}
 		

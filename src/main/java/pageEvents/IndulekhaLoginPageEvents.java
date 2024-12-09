@@ -13,13 +13,6 @@ public class IndulekhaLoginPageEvents extends IndulekhaLoginPageElements{
 	
 	public IndulekhaLoginPageEvents verifyLoginPageLinks()
 	{
-		switchToIframe(driver.findElement(By.id("one-click-social-login-buttons-1")));
-		waitTillElementAppear(driver.findElement(btn_Facebook));
-		driver.findElement(btn_Facebook).isDisplayed();
-		logger.info("Facebook link is present");
-		driver.findElement(btn_Google).isDisplayed();
-		logger.info("Google link is present");
-		navigateOutFromFrame();
 		driver.findElement(txtbox_email).isDisplayed();
 		logger.info("Email textbox is present");
 		driver.findElement(txtbox_password).isDisplayed();

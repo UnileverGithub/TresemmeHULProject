@@ -34,7 +34,7 @@ public class IndulekhaLoginPageVerification extends BaseTest{
 		IndulekhaHomePageEventOBJ.clickOnLogin().verifyLoginPageLinks();
 	}
 	
-	@Test @Ignore
+	@Test 
 	public void verifyLoginWithValidDetails() throws InterruptedException
 	{
 		String message = "<b>Given:</b> go to indulekha site <br>"
