@@ -116,4 +116,52 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 	        }
 		return this;
 	}
+	
+	public Tres_HomePageEvents verifyThatWizzySearchResultIsNotEmpty()
+	{
+		List<WebElement> collectionItems = driver.findElements(By.xpath("//div[@class='wizzy-search-results']//ul/li"));
+		 if (collectionItems.size() > 1) {
+	            log.info("Wizzy search result has more than 1 item in it");
+	        } else {
+	            log.error("Wizzy search result has less than 1 sku in it");
+	        }
+		return this;
+	}
+	
+	public Tres_HomePageEvents clickOnSearchBox()
+	{
+		driver.findElement(txtbx_SearchBox).isDisplayed();
+		driver.findElement(txtbx_SearchBox).click();
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyTrendingSearchSuggestionPresence()
+	{
+		clickOnSearchBox();
+		driver.findElement(div_wizzySearch).isDisplayed();
+		driver.findElement(div_WizzySearchSuggestion).isDisplayed();
+		driver.findElement(div_WizzySearchTopProduct).isDisplayed();
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyTrendingSearchSuggestionNavigation()
+	{
+		HashMap<String,String> trendingOptions = new HashMap<String,String>();
+		trendingOptions.put("Shampoos", "https://www.tresemme.in/pages/search?q=shampoos");
+		trendingOptions.put("Conditioners", "https://www.tresemme.in/pages/search?q=conditioners");
+		trendingOptions.put("Serums", "https://www.tresemme.in/pages/search?q=serums");
+		trendingOptions.put("Masks", "https://www.tresemme.in/pages/search?q=masks");
+		trendingOptions.put("Combos", "https://www.tresemme.in/pages/search?q=combos");
+		for(Entry<String, String> entry: trendingOptions.entrySet())
+		{
+			clickOnSearchBox();
+			driver.findElement(div_wizzySearch).isDisplayed();
+			driver.findElement(div_WizzySearchSuggestion).isDisplayed();
+			WebElement navbarSubCategory = driver.findElement(By.xpath("//div[@class='wizzy-autocomplete-suggestions']/ul/li/a[contains(.,'"+entry.getKey()+"')]"));
+			navbarSubCategory.click();
+			Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+			verifyThatWizzySearchResultIsNotEmpty();
+		}
+		return this;
+	}
 }
