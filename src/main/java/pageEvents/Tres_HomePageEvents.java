@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -19,6 +20,16 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 	
 	Logger log = Consoleloggers.getLogger(IndulekhaHomepageEvents.class);
 	
+	
+	public Tres_HomePageEvents acceptOntrustCookie()
+	{
+		List<WebElement> onetrustCookie = driver.findElements(By.xpath("//button[@id='onetrust-accept-btn-handler']"));
+		if(onetrustCookie.size()>0)
+		{
+			driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).click();
+		}
+		return this;
+	}
 	
 	/*
 	 * Author: Renu
@@ -35,9 +46,9 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 	
 	public Tres_HomePageEvents verifyTresHomePage()
 	{
-		driver.findElement(img_heroBannerslider);
-		driver.findElement(section_concernProduct);
-		driver.findElement(section_topTenProducts);
+		driver.findElement(img_heroBannerslider).isDisplayed();
+		driver.findElement(section_concernProduct).isDisplayed();
+		driver.findElement(section_topTenProducts).isDisplayed();
 		return this;
 	}
 	
@@ -135,6 +146,14 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 		return this;
 	}
 	
+	public Tres_HomePageEvents sendTextInSearchBox(String keyword)
+	{
+		driver.findElement(txtbx_SearchBox).clear();
+		driver.findElement(txtbx_SearchBox).sendKeys(keyword);
+		driver.findElement(txtbx_SearchBox).sendKeys(Keys.ENTER);
+		return this;
+	} 
+	
 	public Tres_HomePageEvents verifyTrendingSearchSuggestionPresence()
 	{
 		clickOnSearchBox();
@@ -162,6 +181,53 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 			Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
 			verifyThatWizzySearchResultIsNotEmpty();
 		}
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyValidSearchText(String keyword)
+	{
+		driver.findElement(txt_searchResult).isDisplayed();
+		verifySubStringPresence(driver.findElement(txt_searchResult).getText(), keyword);
+		verifyLeftPositionOfElement(driver.findElement(filterSection), driver.findElement(div_SearchResult));
+		verifyThatWizzySearchResultIsNotEmpty();
+		List<WebElement> searchResultTitles = driver.findElements(By.xpath("//div[@class='card__content']//h3[@class='card__heading h5']/a"));
+		for(int i=0;i<15;i++)
+		{
+			verifySubStringPresence(searchResultTitles.get(i).getText(), keyword.toUpperCase());
+		}
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyInvalidSearchResultPage(String inValidKeyWord)
+	{
+		driver.findElement(txt_EmptySearchResultSummary).isDisplayed();
+		driver.findElement(icon_EmptySearchResultIcon).isDisplayed();
+		driver.findElement(txt_EmptySearchResultContent).isDisplayed();
+		Assert.assertEquals(driver.findElement(txt_EmptySearchResultSummary).getText(),"You searched for "+inValidKeyWord);
+		verifyThatWizzySearchResultIsNotEmpty();
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyHeroBanner()
+	{
+		driver.findElement(img_heroBannerslider).isDisplayed();
+		driver.findElement(img_heroBannerTresSerum).click();
+		Assert.assertEquals(driver.getCurrentUrl(),"https://www.tresemme.in/collections/tresemme-serums");
+		verifyThatCollectionIsNotEmpty();
+		driver.findElement(img_TresLogo).click();
+		driver.findElement(btn_herobannerSwiperNext).isDisplayed();
+		driver.findElement(btn_herobannerSwiperPrev).isDisplayed();
+		return this;
+	}
+	
+	public Tres_HomePageEvents veirfyFooterLogoTres()
+	{
+		driver.findElement(img_TresLogoFooter).isDisplayed();
+		acceptOntrustCookie();
+		scrollIntoView(driver.findElement(img_TresLogoFooter));
+		scrollUp();
+		driver.findElement(img_TresLogoFooter).click();
+		Assert.assertEquals(driver.getCurrentUrl(),"https://www.tresemme.in/");
 		return this;
 	}
 }
