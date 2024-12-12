@@ -1,6 +1,5 @@
 package HomePageTestCases;
 
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -12,8 +11,9 @@ public class verifySearchFunctionality extends BaseTest{
 	public static final String validKeyword = "shampoo";
 	public static final String inValidKeyword = "laptop";
 	public static final String specialChar= "&&$$@#R4";
+	public static final String Multilingual = "champu";
 	
-	@Test @Ignore
+	@Test 
 	public void verifyValidSearchForTres()
 	{
 		String message = "<b>Given:</b> go to tresemme site <br>"
@@ -31,7 +31,7 @@ public class verifySearchFunctionality extends BaseTest{
 	}
 	
 	
-	@Test @Ignore
+	@Test 
 	public void verifyInValidSearchForTres()
 	{
 		String message = "<b>Given:</b> go to tresemme site <br>"
@@ -50,7 +50,7 @@ public class verifySearchFunctionality extends BaseTest{
 	}
 	
 	
-	@Test
+	@Test 
 	public void verifySpecialCharacterSearchForTres()
 	{
 		String message = "<b>Given:</b> go to tresemme site <br>"
@@ -66,4 +66,22 @@ public class verifySearchFunctionality extends BaseTest{
 		.sendTextInSearchBox(specialChar)
 		.verifyInvalidSearchResultPage(specialChar);
 	}
+	
+	@Test 
+	public void verifyMultilingualSearchForTres()
+	{
+		String message = "<b>Given:</b> go to tresemme site <br>"
+				+ "<b>When:</b> verify tresemme home page should display <br>"
+				+ "<b>Then:</b> verify search box should present<br>"
+				+ "<b>And:</b>enter invalid text in search box<br>"
+				+ "<b>And:</b>verify invalid result text should be present<br>"
+				+ "<b>And:</b>verify collections for bestseller should be present<br>";
+		logger.info(message);
+		navigateToDesiredURL("https://www.tresemme.in/");
+		Tres_HomePageEventsOBJ.verifyTresHomePage()
+		.clickOnSearchBox()
+		.sendTextInSearchBox(Multilingual)
+		.verifyValidSearchText(Multilingual);
+	}
+	
 }

@@ -11,7 +11,7 @@ public class verifyBrandLogo extends BaseTest{
 	Tres_HomePageEvents Tres_HomePageEventsOBJ = new Tres_HomePageEvents();
 	
 	
-	@Test @Ignore
+	@Test 
 	public void verifyBrandLogoOfTresemme()
 	{
 		
@@ -24,7 +24,7 @@ public class verifyBrandLogo extends BaseTest{
 		Tres_HomePageEventsOBJ.verifyTresHomePage().brandLogoVerification();
 	}
 	
-	@Test @Ignore
+	@Test 
 	public void verifyHeroBannerOfTresemme()
 	{
 		

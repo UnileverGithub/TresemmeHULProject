@@ -120,6 +120,7 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 	public Tres_HomePageEvents verifyThatCollectionIsNotEmpty()
 	{
 		List<WebElement> collectionItems = driver.findElements(By.xpath("//div[@id='ProductGridContainer']//ul/li"));
+		collectionItems.get(0).isDisplayed();
 		 if (collectionItems.size() > 1) {
 	            log.info("Collection has more than 1 item in it");
 	        } else {
@@ -143,12 +144,14 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 	{
 		driver.findElement(txtbx_SearchBox).isDisplayed();
 		driver.findElement(txtbx_SearchBox).click();
+		waitTillElementAppear(driver.findElement(div_wizzySearch));
 		return this;
 	}
 	
 	public Tres_HomePageEvents sendTextInSearchBox(String keyword)
 	{
 		driver.findElement(txtbx_SearchBox).clear();
+		waitTillElementIsClickable(driver.findElement(txtbx_SearchBox));
 		driver.findElement(txtbx_SearchBox).sendKeys(keyword);
 		driver.findElement(txtbx_SearchBox).sendKeys(Keys.ENTER);
 		return this;
@@ -228,6 +231,111 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 		scrollUp();
 		driver.findElement(img_TresLogoFooter).click();
 		Assert.assertEquals(driver.getCurrentUrl(),"https://www.tresemme.in/");
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifyFooterSectionLinks(String category)
+	{
+		if(category.equalsIgnoreCase("Product Links"))
+		{
+			HashMap<String,String> footerProductLink = new HashMap<String,String>();
+			footerProductLink.put("Shampoo", "https://www.tresemme.in/collections/shampoo");
+			footerProductLink.put("Conditioner", "https://www.tresemme.in/collections/conditioner");
+			footerProductLink.put("Mask", "https://www.tresemme.in/collections/hair-mask");
+			footerProductLink.put("Serum", "https://www.tresemme.in/collections/hair-serum");
+			footerProductLink.put("Combo", "https://www.tresemme.in/collections/hair-care-combo");
+			for(Entry<String, String> entry: footerProductLink.entrySet())
+			{
+				scrollIntoView(driver.findElement(img_TresLogoFooter));
+				scrollUp();
+				WebElement footerProductlink = driver.findElement(By.xpath("//footer[@id='footer_cstm']//h2[text()='"+category+"']/following-sibling::ul/li/a[contains(text(),'"+entry.getKey()+"')]"));
+				footerProductlink.click();
+				Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+				verifyThatCollectionIsNotEmpty();
+			}
+		}
+		
+		else if(category.equalsIgnoreCase("Quick Links"))
+		{
+			HashMap<String,String> footerQuickLink = new HashMap<String,String>();
+			footerQuickLink.put("Contact Us", "https://www.tresemme.in/pages/contact");
+			footerQuickLink.put("Hair Care", "https://www.tresemme.in/collections/all");
+			footerQuickLink.put("About Us", "https://www.tresemme.in/pages/our-vision");
+			footerQuickLink.put("Legal Disclaimer", "https://www.tresemme.in/pages/legal-disclaimer");
+			
+			for(Entry<String, String> entry: footerQuickLink.entrySet())
+			{
+				scrollIntoView(driver.findElement(img_TresLogoFooter));
+				scrollUp();
+				WebElement footerQuicklink = driver.findElement(By.xpath("//footer[@id='footer_cstm']//h2[text()='"+category+"']/following-sibling::ul/li/a[contains(text(),'"+entry.getKey()+"')]"));
+				footerQuicklink.click();
+				Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+			}
+			
+			WebElement footerQuickAccessabilitylink = driver.findElement(By.xpath("//footer[@id='footer_cstm']//h2[text()='Quick Links']/following-sibling::ul/li/a[contains(text(),'Accessibility')]"));
+			footerQuickAccessabilitylink.click();
+			Assert.assertEquals("https://notices.unilever.com/general/en/accessibility/", driver.getCurrentUrl());
+		}
+		if(category.equalsIgnoreCase("Legal"))
+		{
+			HashMap<String,String> footerLegalLink = new HashMap<String,String>();
+			footerLegalLink.put("Privacy Notice", "https://www.unilevernotices.com/privacy-notices/india-english.html");
+			footerLegalLink.put("Cookie Notice", "https://www.unilevernotices.com/cookie-notices/india-english.html");
+			footerLegalLink.put("Terms & Conditions", "https://www.tresemme.in/pages/terms-conditions");
+			footerLegalLink.put("Terms of Use", "https://www.tresemme.in/pages/terms-of-use");
+			footerLegalLink.put("Terms of Service", "https://www.tresemme.in/pages/terms-of-service");
+			footerLegalLink.put("Return policy", "https://www.tresemme.in/pages/return-policy");
+			footerLegalLink.put("Refund policy", "https://www.tresemme.in/policies/refund-policy");
+			for(Entry<String, String> entry: footerLegalLink.entrySet())
+			{
+				scrollIntoView(driver.findElement(img_TresLogoFooter));
+				scrollUp();
+				WebElement footerProductlink = driver.findElement(By.xpath("//footer[@id='footer_cstm']//h2[text()='"+category+"']/following-sibling::ul/li/a[contains(text(),'"+entry.getKey()+"')]"));
+				footerProductlink.click();
+				Assert.assertEquals(entry.getValue(), driver.getCurrentUrl());
+				driver.navigate().back();
+			}
+		}
+		
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifySocialMediaFooterLinks()
+	{
+		String [] socialMedia = {"Facebook","Instagram","YouTube"};
+		for(String media : socialMedia)
+		{
+			try
+			{
+				WebElement footerSocialMedialink = driver.findElement(By.xpath("//div[@class='footer_social_icons']//span[text()='"+media+"']/parent::a"));
+				footerSocialMedialink.isDisplayed();
+				footerSocialMedialink.click();
+				if(media.equalsIgnoreCase("Facebook"))
+					Assert.assertEquals("https://www.facebook.com/TresemmeIndia/", driver.getCurrentUrl());
+				else if(media.equalsIgnoreCase("Instagram"))
+					Assert.assertEquals("https://www.instagram.com/accounts/login/?next=https%3A%2F%2Fwww.instagram.com%2Ftresemmeindia%2F&is_from_rle", driver.getCurrentUrl());
+				else if(media.equalsIgnoreCase("YouTube"))
+					Assert.assertEquals("https://www.youtube.com/user/TresemmeIndia", driver.getCurrentUrl());
+				
+				driver.navigate().back();
+					
+			}
+			catch (Exception e) 
+			{
+				System.out.println("Element not found for: " + media);
+			}
+					
+		}
+		return this;
+	}
+	
+	public Tres_HomePageEvents verifySafetyCautionNotice()
+	{
+		String safetyCautionText = driver.findElement(txt_SafetyNotice).getText();
+		verifySubStringPresence(safetyCautionText, "Safety Advisory");
+		verifySubStringPresence(safetyCautionText, "Please Be Aware: Cyber crime, particularly fraudulent communications through phone, SMS, WhatsApp, emails, etc. with third parties impersonating as a genuine organization or brand to financially dupe consumers is on the rise.");
+		verifySubStringPresence(safetyCautionText, "Unilever does not request for payment for purchase of our products outside our platform for any promotional activity. We also do not request for payments to participate in any contest, lucky draw, free gifts. Hence, we request all consumers to be cautious in the event of any such communications. You can reach out to our customer care listed on our platform to verify any suspicious activity.");
+		verifySubStringPresence(safetyCautionText, "Note: You can also report any suspected fraudulent telecommunications on Chakshu Portal, to the Department of Telecommunications (DOT).");
 		return this;
 	}
 }
