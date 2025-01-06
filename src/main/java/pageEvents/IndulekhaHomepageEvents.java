@@ -17,6 +17,7 @@ public class IndulekhaHomepageEvents extends IndulekhaHomeElement{
 	IndulekhaLoginPageEvents IndulekhaLoginPageEventsOBJ;
 	Logger log = Consoleloggers.getLogger(IndulekhaHomepageEvents.class);
 	
+	
 	/*
 	 * Author: Renu
 	 * method: to accept cookie law

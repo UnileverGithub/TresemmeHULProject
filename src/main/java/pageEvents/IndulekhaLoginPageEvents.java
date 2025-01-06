@@ -11,6 +11,10 @@ public class IndulekhaLoginPageEvents extends IndulekhaLoginPageElements{
 	
 	IndulekhaHomeElement IndulekhaHomeElementOBJ = new IndulekhaHomeElement();
 	
+	/*
+	 * Author: Renu
+	 * method: verifyLoginPageLinks
+	 */
 	public IndulekhaLoginPageEvents verifyLoginPageLinks()
 	{
 		driver.findElement(txtbox_email).isDisplayed();
@@ -24,6 +28,10 @@ public class IndulekhaLoginPageEvents extends IndulekhaLoginPageElements{
 		return this;
 	}
 	
+	/*
+	 * Author: Renu
+	 * method: enterAndVerifyLoginWithValidCred
+	 */
 	public IndulekhaLoginPageEvents enterAndVerifyLoginWithValidCred(String email, String password) throws InterruptedException
 	{
 		waitTillElementAppear(driver.findElement(txtbox_email));
