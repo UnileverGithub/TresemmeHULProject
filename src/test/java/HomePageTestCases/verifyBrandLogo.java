@@ -1,6 +1,5 @@
 package HomePageTestCases;
 
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import base.BaseTest;

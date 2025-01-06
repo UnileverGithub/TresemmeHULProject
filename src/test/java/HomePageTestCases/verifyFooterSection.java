@@ -1,6 +1,5 @@
 package HomePageTestCases;
 
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -74,4 +73,5 @@ public class verifyFooterSection extends BaseTest{
 		Tres_HomePageEventsOBJ.verifyTresHomePage().acceptOntrustCookie()
 		.verifySafetyCautionNotice();
 	}
+	
 }

@@ -30,5 +30,6 @@ public class Tres_HomePageElements extends BaseTest{
 	protected By txt_EmptySearchResultContent = By.xpath("//div[@class='wizzy-empty-results-content']");
 	protected By txt_SafetyNotice = By.xpath("//div[@id='caution_notice_wrapper_cstm']");
 	protected By lnk_ChakshuPortal = By.xpath("//div[@id='caution_notice_wrapper_cstm']//a[text()='Chakshu Portal']");
+	protected By lnk_ContactUs = By.xpath("//footer[@id='footer_cstm']//a[contains(text(),'Contact Us')]");
 	
 }

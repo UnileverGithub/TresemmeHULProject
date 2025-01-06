@@ -338,4 +338,13 @@ public class Tres_HomePageEvents extends Tres_HomePageElements{
 		verifySubStringPresence(safetyCautionText, "Note: You can also report any suspected fraudulent telecommunications on Chakshu Portal, to the Department of Telecommunications (DOT).");
 		return this;
 	}
+	
+	public Tres_HomePageEvents ClickOnContactUsLink()
+	{
+		waitTillElementIsClickable(driver.findElement(lnk_ContactUs));
+		scrollIntoView(driver.findElement(lnk_ContactUs));
+		scrollUp();
+		driver.findElement(lnk_ContactUs).click();
+		return this;
+	}
 }

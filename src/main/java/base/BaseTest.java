@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -508,8 +510,5 @@ public class BaseTest {
 		        return false; // Return false if there was an error
 		    }
 		    
-		
-		
-	
 
 }
