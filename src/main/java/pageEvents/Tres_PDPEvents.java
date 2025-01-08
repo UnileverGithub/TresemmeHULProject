@@ -29,6 +29,14 @@ public class Tres_PDPEvents extends Tres_PDPElements{
 		return this;
 	}
 	
+	public Tres_PDPEvents verifyProductPage()
+	{
+		driver.findElement(productPage).isDisplayed();
+		driver.findElement(txt_productInfoSection).isDisplayed();
+		driver.findElement(img_productImage).isDisplayed();
+		return this;
+	}
+	
 	/*
 	 * Author: Renu
 	 * method: to verifyProductPrice

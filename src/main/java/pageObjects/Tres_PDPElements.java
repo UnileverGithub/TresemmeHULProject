@@ -28,5 +28,6 @@ public class Tres_PDPElements extends BaseTest{
 	protected By lnk_Facebook = By.xpath("//button[@id='buyOnlineCstm']/parent::product-info//div[contains(@class,'share_button')]//div/p[@class='facebook_share_social_icon']");
 	protected By lnk_Twitter = By.xpath("//button[@id='buyOnlineCstm']/parent::product-info//div[contains(@class,'share_button')]//div/p[@class='twitter_share_social_icon']");
 	protected By btn_BuyOnlne = By.xpath("//button[@id='buyOnlineCstm']/parent::product-info//button[@id='buyOnlineCstm']");
+	protected By productPage = By.xpath("//body[@id='Tresemmeproduct']");
 	
 }

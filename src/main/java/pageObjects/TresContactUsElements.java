@@ -26,4 +26,6 @@ public class TresContactUsElements extends BaseTest{
 	protected By topBlogPostSection = By.xpath("//body[@id='Tresemmearticle.custom']//div[@id='article_sidebar']");
 	protected By tableOfContentSection = By.xpath("//body[@id='Tresemmearticle.custom']//div[@class='toc_container']");
 	protected By img_BlogHeroimage = By.xpath("//body[@id='Tresemmearticle.custom']//div[@class='article-template__hero-adapt media']/img");
+	protected By img_TresLogo = By.xpath("//img[@alt='Tresemme India']");
+	
 }
